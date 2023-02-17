@@ -14,20 +14,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import java.io.IOException;
 
-public class AuthorTokenFilter extends OncePerRequestFilter implements Filter {
+public class AuthorTokenFilter extends OncePerRequestFilter {
 
     @Autowired
-    private AuthorJwtUtils jwtUtils;
+    private JwtUtils jwtUtils;
 
     @Autowired
     private AuthorDetailsService authorDetailsService;
+
+
 
     private static final Logger logger = LoggerFactory.getLogger(AuthorTokenFilter.class);
 
@@ -66,34 +63,4 @@ public class AuthorTokenFilter extends OncePerRequestFilter implements Filter {
         return null;
     }
 
-    @Override
-    public void init(FilterConfig filterConfig) throws javax.servlet.ServletException {
-
-    }
-
-    @Override
-    public void doFilter(ServletRequest servletRequest,
-                         ServletResponse servletResponse,
-                         javax.servlet.FilterChain filterChain) throws IOException, javax.servlet.ServletException {
-        try {
-            String jwt = parseJwt((HttpServletRequest) servletRequest);
-            if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
-                String username = jwtUtils.getUserNameFromJwtToken(jwt);
-
-                UserDetails userDetails = authorDetailsService.loadUserByUsername(username);
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(
-                                userDetails,
-                                null,
-                                userDetails.getAuthorities());
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails((HttpServletRequest) servletRequest));
-
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
-        } catch (Exception e) {
-            logger.error("Cannot set user authentication: {}", e.toString());
-        }
-
-        filterChain.doFilter(servletRequest, servletResponse);
-    }
 }

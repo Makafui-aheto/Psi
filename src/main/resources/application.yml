@@ -1,0 +1,188 @@
+spring:
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+      show_sql: true
+    generate-ddl: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: false
+        #        globally_quoted_identifiers: true
+        naming:
+          implicit-strategy=org:
+            hibernate:
+              boot:
+                model:
+                  naming:
+                    ImplicitNamingStrategyLegacyJpaImpl:
+
+          physical-strategy=org:
+            hibernate:
+              boot:
+                model:
+                  naming:
+                    PhysicalNamingStrategyStandardImpl:
+
+
+      #    session:
+      #      store-type=jdbc:
+      #  sql:
+
+
+  #      mode:
+  #      continue-on-error: true
+  #      platform: postgres
+  datasource:
+    username: eyzycznmhegwka
+    password: <PASSWORD>
+    url: jdbc:postgresql://ec2-44-194-92-192.compute-1.amazonaws.com:5432/daidcuvki0tl5k
+
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      enabled: true
+      # Threshold after  which files are written to disk.
+      file-size-threshold: 2KB
+      max-file-size: 10MB
+      max-request-size: 10MB
+  #  boot:
+  #    admin:
+  #      client:
+  #        url: http://localhost:8080
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+logging:
+  level:
+    orghibernate.SQL: DEBUG
+
+server:
+  servlet:
+    session:
+      timeout: 1m
+    context-path: /groupi
+  error:
+    include-message: always
+  port: 9020
+#  ssl:
+#    enabled: true
+#    key-alias: mycert
+#    key-store-password: Bethemessage123&
+#    key-store: 'classpath:zetcode.p12'
+#    key-store-provider: SUN
+#    key-store-type: PKCS12
+
+
+jwt:
+  secret: b0bby$e$
+  expiration-ms: 86400000
+
+  refreshExpirationDateInMs=9000000:
+
+email:
+  host: smtppro.zoho.com #smtppro
+  port: 587
+  username: support@sysurance.com
+  password: Today@1234
+
+remotehost:
+  hostURL: ""
+  userName: ""
+  password: ""
+
+sms:
+  apiKey:
+  username:
+  password:
+
+verification:
+  token:
+    expiry: true
+    duration: 8  #Please Specify in hrs#
+
+paypal :
+  mode: sandbox
+  client:
+    id: AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS
+    secret: secret:EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL
+
+springdoc:
+  packagesToScan: com.pi.groupi
+  paths-to-exclude: /api/v1/gateway/**
+  pathsToMatch: /api/**
+  show-actuator: true
+
+log4j:
+  logger:
+    memberUploadLogger: ' INFO, memberUploadLog '
+    companyUploadLogger: ' INFO, companyUploadLog '
+    groupUpdateLogger: ' INFO, groupUpdateLog '
+    staffUpdateLogger: ' INFO, staffUpdateLog '
+    staffUploadLogger: ' INFO, staffUploadLog'
+    genericPolicyUploadLogger: ' INFO, genericPolicyUploadLog'
+
+  appender:
+    memberUploadLog: ' org.apache.log4j.DailyRollingFileAppender '
+    memberUploadLog.File:  ' "memberUpload.log" '
+    memberUploadLog.DatePattern:  yyyy-MM-dd
+    memberUploadLog.MaxFileSize: '10MB '
+    memberUploadLog.MaxBackupIndex: 10
+    memberUploadLog.layout: 'org.apache.log4j.PatternLayout'
+    memberUploadLog.layout.ConversionPattern: '%d{yyyy-MM-dd HH:mm:ss} %-5p %C:%L - %m%n'
+
+    companyUploadLog: ' org.apache.log4j.DailyRollingFileAppender '
+    companyUploadLog.File: ' "companyUpload.log" '
+    companyUploadLog.DatePattern: yyyy-MM-dd
+    companyUploadLog.MaxFileSize: '10MB'
+    companyUploadLog.MaxBackupIndex: 10
+    companyUploadLog.layout: 'org.apache.log4j.PatternLayout'
+    companyUploadLog.layout.ConversionPattern: '%d{yyyy-MM-dd HH:mm:ss} %-5p %C:%L - %m%n'
+
+    groupUpdateLog:  ' org.apache.log4j.DailyRollingFileAppender '
+    groupUpdateLog.File: ' "groupUpdate.log" '
+    groupUpdateLog.DatePattern:  yyyy-MM-dd
+    groupUpdateLog.MaxFileSize: '10MB '
+    groupUpdateLog.MaxBackupIndex: 10
+    groupUpdateLog.layout: 'org.apache.log4j.PatternLayout'
+    groupUpdateLog.layout.ConversionPattern: '%d{yyyy-MM-dd HH:mm:ss} %-5p %C:%L - %m%n'
+
+    staffUpdateLog:  ' org.apache.log4j.DailyRollingFileAppender '
+    staffUpdateLog.File: ' "staffUpdate.log" '
+    staffUpdateLog.DatePattern:  yyyy-MM-dd
+    staffUpdateLog.MaxFileSize: '10MB '
+    staffUpdateLog.MaxBackupIndex: 10
+    staffUpdateLog.layout: 'org.apache.log4j.PatternLayout'
+    staffUpdateLog.layout.ConversionPattern: '%d{yyyy-MM-dd HH:mm:ss} %-5p %C:%L - %m%n'
+
+    staffUploadLog:  ' org.apache.log4j.DailyRollingFileAppender '
+    staffUploadLog.File: ' "staffUpload.log" '
+    staffUploadLog.DatePattern:  yyyy-MM-dd
+    staffUploadLog.MaxFileSize: '10MB '
+    staffUploadLog.MaxBackupIndex: 10
+    staffUploadLog.layout: 'org.apache.log4j.PatternLayout'
+    staffUploadLog.layout.ConversionPattern: '%d{yyyy-MM-dd HH:mm:ss} %-5p %C:%L - %m%n'
+
+    genericPolicyUploadLog:  ' org.apache.log4j.DailyRollingFileAppender '
+    genericPolicyUploadLog.File: ' "/upload/log/genericPolicyUpload.log" '
+    genericPolicyUploadLog.DatePattern:  yyyy-MM-dd
+    genericPolicyUploadLog.MaxFileSize: '10MB '
+    genericPolicyUploadLog.MaxBackupIndex: 10
+    genericPolicyUploadLog.layout: 'org.apache.log4j.PatternLayout'
+    genericPolicyUploadLog.layout.ConversionPattern: '%d{yyyy-MM-dd HH:mm:ss} %-5p %C:%L - %m%n'
+
+    spring:
+      mail:
+        host: smtp.gmail.com
+        port: 587
+        username: maheto001@st.ug.edu.gh
+        password: Maryaheto123&
+        properties:
+          mail:
+            smtp:
+              auth: true
+              starttls:
+                enable: true
+
